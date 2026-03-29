@@ -20,11 +20,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # Сторонние
-    'rest_framework',
+    'rest_framework',  # ← обязательно должно быть!
     'corsheaders',
     
-    # Наше приложение
     'tenders',
 ]
 
