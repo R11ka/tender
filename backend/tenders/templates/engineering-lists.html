@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TenderFlow — Инженерные листы</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo">TenderFlow<span>B2B</span></div>
+            <nav>
+                <a href="index.html" class="nav-item">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M3 9L12 3L21 9L12 15L3 9Z" stroke="currentColor" fill="none"/>
+                        <path d="M3 15L12 21L21 15" stroke="currentColor" fill="none"/>
+                    </svg>
+                    Дашборд
+                </a>
+                <a href="engineering-lists.html" class="nav-item active">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" fill="none"/>
+                        <polyline points="14 2 14 8 20 8" stroke="currentColor" fill="none"/>
+                    </svg>
+                    Инженерные листы
+                </a>
+                <a href="lots.html" class="nav-item">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" fill="none"/>
+                        <line x1="3" y1="9" x2="21" y2="9" stroke="currentColor"/>
+                    </svg>
+                    Закупочные лоты
+                </a>
+                <a href="suppliers.html" class="nav-item">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" fill="none"/>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke="currentColor" fill="none"/>
+                    </svg>
+                    Поставщики
+                </a>
+                <a href="chats.html" class="nav-item">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" fill="none"/>
+                    </svg>
+                    Чаты
+                </a>
+                <a href="profile.html" class="nav-item" style="margin-top: auto;">
+    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+    </svg>
+    Профиль
+</a>
+            </nav>
+        </aside>
+
+        <div class="main">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A99A8" stroke-width="1.5">
+                        <circle cx="11" cy="11" r="8" stroke="currentColor" fill="none"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor"/>
+                    </svg>
+                    <input type="text" placeholder="Поиск по файлам...">
+                </div>
+                <div class="user-menu">
+                    <span class="user-name">Анна Менеджер</span>
+                    <div class="avatar">АМ</div>
+                    <button class="btn-outline" id="loginBtn">Вход</button>
+                    <button class="btn-primary" id="regBtn">Регистрация</button>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>Инженерные листы</h1>
+                    <button class="btn-primary" onclick="openModal('upload')">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Загрузить ИЛ
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Название файла</th>
+                                    <th>Дата загрузки</th>
+                                    <th>Позиций</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr onclick="window.location.href='engineering-detail.html?file=Кабельная+продукция.xlsx'">
+                                    <td><strong>Кабельная продукция.xlsx</strong></td>
+                                    <td>15.03.2026</td>
+                                    <td>24</td>
+                                    <td><span class="badge badge-progress">В обработке</span></td>
+                                    <td class="text-muted">→</td>
+                                </tr>
+                                <tr onclick="window.location.href='engineering-detail.html?file=Электрощитовое+оборудование.xlsx'">
+                                    <td><strong>Электрощитовое оборудование.xlsx</strong></td>
+                                    <td>10.03.2026</td>
+                                    <td>18</td>
+                                    <td><span class="badge badge-success">Завершен</span></td>
+                                    <td class="text-muted">→</td>
+                                </tr>
+                                <tr onclick="window.location.href='engineering-detail.html?file=Кабель+ВВГнг.xlsx'">
+                                    <td><strong>Кабель ВВГнг.xlsx</strong></td>
+                                    <td>05.03.2026</td>
+                                    <td>42</td>
+                                    <td><span class="badge badge-success">Завершен</span></td>
+                                    <td class="text-muted">→</td>
+                                </tr>
+                                <tr onclick="window.location.href='engineering-detail.html?file=Щитовое+оборудование.xlsx'">
+                                    <td><strong>Щитовое оборудование.xlsx</strong></td>
+                                    <td>01.03.2026</td>
+                                    <td>15</td>
+                                    <td><span class="badge badge-progress">В обработке</span></td>
+                                    <td class="text-muted">→</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модалка загрузки -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <h2>Загрузка инженерного листа</h2>
+            <input type="file" accept=".xlsx,.csv">
+            <button class="btn-primary btn-block" onclick="closeModal('upload'); alert('Файл загружен')">Загрузить →</button>
+            <div class="modal-close" onclick="closeModal('upload')">Отмена</div>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content"><h2>Вход</h2><input placeholder="Email"><input type="password" placeholder="Пароль"><button class="btn-primary btn-block" onclick="closeModal('login')">Войти →</button><div class="modal-close" onclick="closeModal('login')">Закрыть</div></div>
+    </div>
+    <div id="registerModal" class="modal">
+        <div class="modal-content"><h2>Регистрация</h2><input placeholder="Имя"><input placeholder="Email"><input type="password" placeholder="Пароль"><select><option>Менеджер</option><option>Наблюдатель</option></select><button class="btn-primary btn-block" onclick="closeModal('register')">Создать аккаунт →</button><div class="modal-close" onclick="closeModal('register')">Закрыть</div></div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('loginBtn').onclick = () => openModal('login');
+        document.getElementById('regBtn').onclick = () => openModal('register');
+    </script>
+</body>
+</html>

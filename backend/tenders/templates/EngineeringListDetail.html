@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TenderFlow — Позиции ИЛ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo">TenderFlow<span>B2B</span></div>
+            <nav>
+                <a href="index.html" class="nav-item">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M3 9L12 3L21 9L12 15L3 9Z"/>
+                        <path d="M3 15L12 21L21 15"/>
+                    </svg>
+                    Дашборд
+                </a>
+                <a href="engineering-lists.html" class="nav-item active">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                    Инженерные листы
+                </a>
+                <a href="lots.html" class="nav-item">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <line x1="3" y1="9" x2="21" y2="9"/>
+                    </svg>
+                    Закупочные лоты
+                </a>
+                <a href="suppliers.html" class="nav-item">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="2" y="7" width="20" height="14" rx="2"/>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                    </svg>
+                    Поставщики
+                </a>
+                <a href="chats.html" class="nav-item">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Чаты
+                </a>
+                <a href="profile.html" class="nav-item" style="margin-top: auto;">
+    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+    </svg>
+    Профиль
+</a>
+            </nav>
+        </aside>
+
+        <div class="main">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A99A8" stroke-width="1.5">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" placeholder="Поиск по позициям...">
+                </div>
+                <div class="user-menu">
+                    <span class="user-name">Анна Менеджер</span>
+                    <div class="avatar">АМ</div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <a href="engineering-lists.html" class="back-link">← Назад к списку</a>
+                
+                <div class="page-header">
+                    <h1 id="fileName">Кабельная продукция.xlsx</h1>
+                    <button class="btn-outline" onclick="alert('Экспорт в Excel')">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Экспорт
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Наименование по ИЛ</th>
+                                    <th>Количество</th>
+                                    <th>Целевая цена</th>
+                                    <th>Статус</th>
+                                </tr>
+                            </thead>
+                            <tbody id="positionsTable">
+                                <!-- Динамически заполняется -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Данные позиций для разных файлов
+        const positionsData = {
+            'Кабельная продукция.xlsx': [
+                { id: 'POS-001', name: 'Кабель ВВГнг(А)-LS 3x1.5', qty: '3800 м', price: '125 000 ₽', status: 'progress', statusText: 'Торги идут' },
+                { id: 'POS-002', name: 'Кабель ВВГнг(А)-LS 5x16', qty: '1200 м', price: '890 000 ₽', status: 'progress', statusText: 'Торги идут' },
+                { id: 'POS-003', name: 'Кабель КГ 3x25+1x10', qty: '450 м', price: '345 000 ₽', status: 'progress', statusText: 'КП получены' },
+                { id: 'POS-004', name: 'Кабель ВБбШв 4x185', qty: '250 м', price: '1 250 000 ₽', status: 'pending', statusText: 'Нет КП' }
+            ],
+            'Электрощитовое оборудование.xlsx': [
+                { id: 'POS-101', name: 'Щит распределительный ШР-24', qty: '2 шт', price: '90 000 ₽', status: 'success', statusText: 'Завершен' },
+                { id: 'POS-102', name: 'Ящик ЯУО 3', qty: '5 шт', price: '45 000 ₽', status: 'success', statusText: 'Завершен' },
+                { id: 'POS-103', name: 'Шкаф ШМП-1', qty: '3 шт', price: '78 000 ₽', status: 'progress', statusText: 'Торги идут' }
+            ],
+            'Кабель ВВГнг.xlsx': [
+                { id: 'POS-201', name: 'Кабель ВВГнг 3x2.5', qty: '2500 м', price: '210 000 ₽', status: 'progress', statusText: 'Торги идут' },
+                { id: 'POS-202', name: 'Кабель ВВГнг 4x4', qty: '800 м', price: '178 000 ₽', status: 'progress', statusText: 'Торги идут' },
+                { id: 'POS-203', name: 'Кабель ВВГнг 5x10', qty: '450 м', price: '420 000 ₽', status: 'pending', statusText: 'Нет КП' }
+            ],
+            'Щитовое оборудование.xlsx': [
+                { id: 'POS-301', name: 'Щит ЩРН-12', qty: '4 шт', price: '56 000 ₽', status: 'progress', statusText: 'Торги идут' },
+                { id: 'POS-302', name: 'Бокс металлический', qty: '10 шт', price: '32 000 ₽', status: 'progress', statusText: 'КП получены' }
+            ]
+        };
+
+        // Получаем имя файла из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        let fileName = urlParams.get('file') || 'Кабельная продукция.xlsx';
+        fileName = decodeURIComponent(fileName);
+        
+        document.getElementById('fileName').innerText = fileName;
+        
+        const positions = positionsData[fileName] || positionsData['Кабельная продукция.xlsx'];
+        const tbody = document.getElementById('positionsTable');
+        
+        positions.forEach(pos => {
+            const row = tbody.insertRow();
+            row.insertCell(0).innerHTML = `<span class="text-muted">${pos.id}</span>`;
+            row.insertCell(1).innerHTML = `<strong>${pos.name}</strong>`;
+            row.insertCell(2).innerText = pos.qty;
+            row.insertCell(3).innerText = pos.price;
+            
+            let badgeClass = 'badge-progress';
+            if (pos.status === 'success') badgeClass = 'badge-success';
+            if (pos.status === 'pending') badgeClass = 'badge-pending';
+            
+            row.insertCell(4).innerHTML = `<span class="badge ${badgeClass}">${pos.statusText}</span>`;
+            row.style.cursor = 'pointer';
+            row.onclick = () => alert(`Детали позиции ${pos.id}: ${pos.name}\n\nЗдесь будет карточка позиции с КП, комментариями и документами`);
+        });
+    </script>
+</body>
+</html>

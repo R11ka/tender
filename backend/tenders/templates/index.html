@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TenderFlow — Дашборд</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Дополнительные стили только для дашборда */
+        .greeting-card {
+            background: linear-gradient(135deg, #FFFFFF, #FEFEFE);
+            border-radius: 24px;
+            padding: 28px 32px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(44, 110, 159, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .greeting-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2C6E9F, #6BA5C9, #2C6E9F);
+        }
+
+        .greeting-card h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1A4D7A, #2C6E9F);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .greeting-card p {
+            color: #5A6E7F;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 24px;
+            padding: 22px 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid #EFF3F8;
+            transition: all 0.25s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(44, 110, 159, 0.08);
+            border-color: rgba(44, 110, 159, 0.15);
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: #2C6E9F;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            color: #5A6E7F;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .two-columns {
+            display: flex;
+            gap: 28px;
+            margin-bottom: 28px;
+        }
+
+        .col-main {
+            flex: 1.6;
+        }
+
+        .col-side {
+            flex: 1;
+        }
+
+        .chart-container {
+            margin-top: 8px;
+        }
+
+        .area-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            height: 160px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(180deg, #2C6E9F, #6BA5C9);
+            border-radius: 12px 12px 8px 8px;
+            position: relative;
+            transition: height 0.3s;
+        }
+
+        .chart-bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: #2C6E9F;
+            font-weight: 500;
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+            font-size: 12px;
+            color: #8A99A8;
+        }
+
+        .btn-with-arrow:hover svg {
+            transform: translateX(4px);
+        }
+
+        .btn-primary svg, .btn-outline svg {
+            transition: transform 0.2s;
+        }
+
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .two-columns {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo">TenderFlow<span>B2B</span></div>
+            <nav>
+                <a href="index.html" class="nav-item active">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M3 9L12 3L21 9L12 15L3 9Z" stroke="currentColor" fill="none"/>
+                        <path d="M3 15L12 21L21 15" stroke="currentColor" fill="none"/>
+                    </svg>
+                    Дашборд
+                </a>
+                <a href="engineering-lists.html" class="nav-item">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" fill="none"/>
+                        <polyline points="14 2 14 8 20 8" stroke="currentColor" fill="none"/>
+                    </svg>
+                    Инженерные листы
+                </a>
+                <a href="lots.html" class="nav-item">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" fill="none"/>
+                        <line x1="3" y1="9" x2="21" y2="9" stroke="currentColor"/>
+                    </svg>
+                    Закупочные лоты
+                </a>
+                <a href="suppliers.html" class="nav-item">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" fill="none"/>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke="currentColor" fill="none"/>
+                    </svg>
+                    Поставщики
+                </a>
+                <a href="chats.html" class="nav-item">
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" fill="none"/>
+                    </svg>
+                    Чаты
+                </a>
+                <a href="profile.html" class="nav-item" style="margin-top: auto;">
+    <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+    </svg>
+    Профиль
+</a>
+            </nav>
+        </aside>
+
+        <div class="main">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A99A8">
+                        <circle cx="11" cy="11" r="8" stroke="currentColor" fill="none"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor"/>
+                    </svg>
+                    <input type="text" placeholder="Поиск по тендерам, позициям...">
+                </div>
+                <div class="user-menu">
+                    <span class="user-name">Анна Менеджер</span>
+                    <div class="avatar">АМ</div>
+                    <button class="btn-outline" onclick="openModal('login')">Вход</button>
+                    <button class="btn-primary" onclick="openModal('register')">Регистрация</button>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <!-- Приветственная карточка с градиентом -->
+                <div class="greeting-card">
+                    <h1>Доброе утро, Анна 👋</h1>
+                    <p>Ваша платформа для управления тендерными закупками — всё в одном месте</p>
+                    <button class="btn-primary btn-with-arrow" onclick="alert('Создание тендера')">
+                        Создать новый тендер
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                            <polyline points="12 5 19 12 12 19"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Статистика карточками -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">14</div>
+                        <div class="stat-label">Активные торги</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">9</div>
+                        <div class="stat-label">Завершено</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">32</div>
+                        <div class="stat-label">Поставщиков</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">187</div>
+                        <div class="stat-label">Позиций в работе</div>
+                    </div>
+                </div>
+
+                <div class="two-columns">
+                    <div class="col-main">
+                        <!-- Таблица активных позиций -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Активные позиции</h3>
+                                <button class="btn-primary btn-sm" onclick="alert('Загрузка ИЛ')">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"/>
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                    </svg>
+                                    Загрузить ИЛ
+                                </button>
+                            </div>
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Наименование</th>
+                                            <th>Целевая цена</th>
+                                            <th>Лучшее КП</th>
+                                            <th>Статус</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr onclick="alert('Детали позиции T-001')">
+                                            <td class="text-muted">T-001</td>
+                                            <td><strong>Кабель ВВГнг 3x1.5</strong><br><span class="text-small">3800 м</span></td>
+                                            <td>125 000 ₽</td>
+                                            <td>118 000 ₽</td>
+                                            <td><span class="badge badge-progress">Торги идут</span></td>
+                                        </tr>
+                                        <tr onclick="alert('Детали позиции T-002')">
+                                            <td class="text-muted">T-002</td>
+                                            <td><strong>Щит ШР-24</strong><br><span class="text-small">2 шт</span></td>
+                                            <td>90 000 ₽</td>
+                                            <td>87 500 ₽</td>
+                                            <td><span class="badge badge-success">Завершены</span></td>
+                                        </tr>
+                                        <tr onclick="alert('Детали позиции T-003')">
+                                            <td class="text-muted">T-003</td>
+                                            <td><strong>Труба ПНД 50мм</strong><br><span class="text-small">1500 м</span></td>
+                                            <td>480 000 ₽</td>
+                                            <td>—</td>
+                                            <td><span class="badge badge-pending">Нет КП</span></td>
+                                        </tr>
+                                        <tr onclick="alert('Детали позиции T-004')">
+                                            <td class="text-muted">T-004</td>
+                                            <td><strong>Автомат Schneider</strong><br><span class="text-small">45 шт</span></td>
+                                            <td>110 250 ₽</td>
+                                            <td>105 000 ₽</td>
+                                            <td><span class="badge badge-progress">Торги идут</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- График с градиентом -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Динамика тендеров</h3>
+                                <span class="text-small text-muted">последние 6 месяцев</span>
+                            </div>
+                            <div class="chart-container">
+                                <div class="area-chart">
+                                    <div class="chart-bar" style="height: 48px;" data-value="12"></div>
+                                    <div class="chart-bar" style="height: 72px;" data-value="18"></div>
+                                    <div class="chart-bar" style="height: 104px;" data-value="26"></div>
+                                    <div class="chart-bar" style="height: 88px;" data-value="22"></div>
+                                    <div class="chart-bar" style="height: 120px;" data-value="30"></div>
+                                    <div class="chart-bar" style="height: 144px;" data-value="36"></div>
+                                </div>
+                                <div class="chart-labels">
+                                    <span>Янв</span><span>Фев</span><span>Мар</span><span>Апр</span><span>Май</span><span>Июн</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-side">
+                        <!-- Активность -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Активность</h3>
+                            </div>
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2C6E9F" stroke-width="1.5">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                            <polyline points="14 2 14 8 20 8"/>
+                                        </svg>
+                                    </div>
+                                    <div class="activity-content">
+                                        <strong>Кабель ВВГнг</strong> — новое КП от КабельСнаб
+                                        <div class="activity-time">15 минут назад</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="1.5">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                        </svg>
+                                    </div>
+                                    <div class="activity-content">
+                                        <strong>Щит ШР-24</strong> — выбран победитель
+                                        <div class="activity-time">2 часа назад</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6E7F" stroke-width="1.5">
+                                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="activity-content">
+                                        <strong>Анна М.</strong> оставила комментарий по T-001
+                                        <div class="activity-time">5 часов назад</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Чаты -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Чаты с поставщиками</h3>
+                            </div>
+                            <div class="chat-list">
+                                <div class="chat-message">
+                                    <div class="chat-avatar">КС</div>
+                                    <div class="chat-content">
+                                        <strong>ООО "КабельСнаб"</strong>
+                                        <div>Цена согласована, ждем протокол</div>
+                                    </div>
+                                </div>
+                                <div class="chat-message">
+                                    <div class="chat-avatar">ЭЩ</div>
+                                    <div class="chat-content">
+                                        <strong>ООО "ЭлектроЩит"</strong>
+                                        <div>Уточните сроки доставки</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn-outline btn-block" onclick="window.location.href='chats.html'">
+                                Все сообщения
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                    <polyline points="12 5 19 12 12 19"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модалки -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>Вход</h2>
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Пароль">
+            <button class="btn-primary btn-block" onclick="closeModal('login'); alert('Добро пожаловать!')">Войти →</button>
+            <div class="modal-close" onclick="closeModal('login')">Закрыть</div>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <h2>Регистрация</h2>
+            <input type="text" placeholder="Имя">
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Пароль">
+            <select>
+                <option>Менеджер</option>
+                <option>Наблюдатель</option>
+            </select>
+            <button class="btn-primary btn-block" onclick="closeModal('register'); alert('Регистрация успешна!')">Создать аккаунт →</button>
+            <div class="modal-close" onclick="closeModal('register')">Закрыть</div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Дополнительные обработчики для кнопок в топбаре, если они не нашли свои ID
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginBtn = document.querySelector('.top-bar .btn-outline');
+            const regBtn = document.querySelector('.top-bar .btn-primary');
+            if (loginBtn) loginBtn.onclick = () => openModal('login');
+            if (regBtn) regBtn.onclick = () => openModal('register');
+        });
+    </script>
+</body>
+</html>
