@@ -21,7 +21,7 @@ function Layout({ user, onLogout }) {
                             <path d="M3 9L12 3L21 9L12 15L3 9Z" />
                             <path d="M3 15L12 21L21 15" />
                         </svg>
-                        Дашборд
+                        Главная страница
                     </Link>
                     <Link to="/engineering-lists" className="nav-item">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ marginRight: '8px' }}>
