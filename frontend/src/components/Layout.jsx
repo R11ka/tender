@@ -12,7 +12,9 @@ function Layout({ user, onLogout }) {
     return (
         <div className="app">
             <div className="sidebar">
-                <div className="logo">TenderFlow <span>B2B</span></div>
+                <div className="logo">
+                    <img src="/logo.png" alt="Логотип техникума" style={{ height: '100px' }} />
+                </div>
                 <div className="nav-menu">
                     <Link to="/" className="nav-item">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ marginRight: '8px' }}>
