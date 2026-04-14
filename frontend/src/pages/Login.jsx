@@ -64,7 +64,7 @@ function Login({ setUser }) {
             background: '#F5F7FA'
         }}>
             <div className="card" style={{ width: '400px' }}>
-                <h2>Вход в TenderFlow</h2>
+                <h2>Вход в АТЗ ЧТОТиБ'а</h2>
                 {error && (
                     <div style={{ 
                         color: '#d32f2f', 
