@@ -4,7 +4,9 @@ import { NavLink } from 'react-router-dom';
 function Sidebar() {
     return (
         <aside className="sidebar">
-            <div className="logo">TenderFlow<span>B2B</span></div>
+            <div className="logo">
+    <img src="/logo.png" alt="Логотип техникума" style={{ height: '100px' }} />
+</div>
             <nav>
                 <NavLink to="/" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
                     <svg className="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -36,13 +38,6 @@ function Sidebar() {
                         <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
                     </svg>
                     Поставщики
-                </NavLink>
-
-                <NavLink to="/chats" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-                    <svg className="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                    </svg>
-                    Чаты
                 </NavLink>
 
                 <NavLink to="/profile" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} style={{ marginTop: 'auto' }}>

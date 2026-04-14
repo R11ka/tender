@@ -1,10 +1,14 @@
 import axios from 'axios';
 
+// Если запущено в Докере, запросы идут через прокси Vite
+// Если локально (без докера), то на localhost:8000
+const baseURL = import.meta.env.DEV ? 'http://localhost:8000/api' : '/api';
+
 const api = axios.create({
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: baseURL,
 });
 
-// Автоматически добавляем токен к каждому запросу
+// Добавляем токен к каждому запросу
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('access_token');
@@ -18,13 +22,12 @@ api.interceptors.request.use(
     }
 );
 
-// Обработка ошибок авторизации
+// Обработка ошибок авторизации (обновление токена)
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
         
-        // Если ошибка 401 (не авторизован) и это не повторная попытка
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
             
@@ -34,18 +37,14 @@ api.interceptors.response.use(
                     throw new Error('No refresh token');
                 }
                 
-                // Пробуем обновить токен
                 const response = await axios.post('http://localhost:8000/api/token/refresh/', {
                     refresh: refreshToken
                 });
                 
                 localStorage.setItem('access_token', response.data.access);
-                
-                // Повторяем оригинальный запрос с новым токеном
                 originalRequest.headers.Authorization = `Bearer ${response.data.access}`;
                 return api(originalRequest);
             } catch (refreshError) {
-                // Если не удалось обновить - выходим из системы
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('refresh_token');
                 window.location.href = '/login';

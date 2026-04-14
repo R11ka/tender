@@ -39,7 +39,6 @@ function EngineeringDetail({ user }) {
         unit: '',
         target_price: 0,
         status: 'in_work'
-        
     });
     
     const fileInputRef = useRef(null);
@@ -277,14 +276,53 @@ function EngineeringDetail({ user }) {
                                         <td><span className={`badge ${pos.status === 'completed' ? 'badge-success' : 'badge-progress'}`}>
                                             {pos.status === 'in_work' ? 'В работе' : pos.status === 'completed' ? 'Завершен' : 'Отменен'}
                                         </span></td>
-                                        <td style={{ textAlign: 'center' }}>{pos.documents_count > 0 ? `📎 ${pos.documents_count}` : '—'}</td>
-                                        <td style={{ textAlign: 'center' }}>{pos.comments_count > 0 ? `💬 ${pos.comments_count}` : '—'}</td>
+                                        <td style={{ textAlign: 'center' }}>
+                                            {pos.documents_count > 0 ? (
+                                                <>
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A99A8" style={{ marginRight: '4px' }}>
+                                                        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                                                    </svg>
+                                                    {pos.documents_count}
+                                                </>
+                                            ) : '—'}
+                                        </td>
+                                        <td style={{ textAlign: 'center' }}>
+                                            {pos.comments_count > 0 ? (
+                                                <>
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A99A8" style={{ marginRight: '4px' }}>
+                                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                                    </svg>
+                                                    {pos.comments_count}
+                                                </>
+                                            ) : '—'}
+                                        </td>
                                         {isManager && (
                                             <td>
                                                 <div style={{ display: 'flex', gap: '4px' }}>
-                                                    <button className="btn-icon" onClick={(e) => { e.stopPropagation(); startEditing(pos); }} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px' }}>✏️</button>
+                                                    <button 
+                                                        className="btn-icon" 
+                                                        onClick={(e) => { e.stopPropagation(); startEditing(pos); }} 
+                                                        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}
+                                                        title="Редактировать"
+                                                    >
+                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2C6E9F" strokeWidth="2">
+                                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                                            <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z" />
+                                                        </svg>
+                                                    </button>
                                                     {pos.status !== 'completed' && (
-                                                        <button className="btn-icon" onClick={(e) => { e.stopPropagation(); openCompleteModal(pos); }} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px' }}>🏆</button>
+                                                        <button 
+                                                            className="btn-icon" 
+                                                            onClick={(e) => { e.stopPropagation(); openCompleteModal(pos); }} 
+                                                            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}
+                                                            title="Завершить торги"
+                                                        >
+                                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ED6C02" strokeWidth="2">
+                                                                <circle cx="12" cy="12" r="10" />
+                                                                <path d="M12 6v6l4 2" />
+                                                                <path d="M8 12h8" />
+                                                            </svg>
+                                                        </button>
                                                     )}
                                                 </div>
                                             </td>
@@ -312,7 +350,14 @@ function EngineeringDetail({ user }) {
                     </div>
                     
                     <div style={{ marginBottom: '24px' }}>
-                        <h4 style={{ marginBottom: '12px' }}>📄 Документы</h4>
+                        <h4 style={{ marginBottom: '12px' }}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ marginRight: '8px' }}>
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                            </svg>
+                            Документы
+                        </h4>
+
                         {isManager && (
                             <div style={{ marginBottom: '16px', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
                                 <select value={docType} onChange={e => setDocType(e.target.value)} style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #ddd' }}>
@@ -348,7 +393,12 @@ function EngineeringDetail({ user }) {
                                             link.click();
                                             document.body.removeChild(link);
                                         }} style={{ color: '#2C6E9F', textDecoration: 'none', padding: '8px 16px', background: '#e3f2fd', borderRadius: '4px', border: 'none', cursor: 'pointer', fontSize: '14px' }}>
-                                            📥 Скачать
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ marginRight: '4px' }}>
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                                <polyline points="7 10 12 15 17 10" />
+                                                <line x1="12" y1="15" x2="12" y2="3" />
+                                            </svg>
+                                            Скачать
                                         </button>
                                     </div>
                                 ))
@@ -357,7 +407,12 @@ function EngineeringDetail({ user }) {
                     </div>
                     
                     <div>
-                        <h4 style={{ marginBottom: '12px' }}>💬 Комментарии</h4>
+                        <h4 style={{ marginBottom: '12px' }}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ marginRight: '8px' }}>
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                            </svg>
+                            Комментарии
+                        </h4>
                         {isManager && (
                             <div className="comment-input" style={{ marginBottom: '16px' }}>
                                 <textarea value={newComment} onChange={e => setNewComment(e.target.value)} placeholder="Напишите комментарий..." rows="3"
@@ -384,7 +439,6 @@ function EngineeringDetail({ user }) {
                 </div>
             )}
             
-            {/* Модалки остаются без изменений */}
             {showCompleteModal && selectedPosition && (
                 <div className="modal active" onClick={() => setShowCompleteModal(false)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
@@ -407,66 +461,65 @@ function EngineeringDetail({ user }) {
             )}
             
             {editingPosition && (
-    <div className="modal active" onClick={() => setEditingPosition(null)}>
-        <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h2>Редактирование позиции #{editingPosition.id}</h2>
-            
-            <div className="form-group">
-                <label>Наименование по ИЛ</label>
-                <input type="text" value={editForm.name_by_il} 
-                    onChange={e => setEditForm({...editForm, name_by_il: e.target.value})} />
-            </div>
-            
-            <div className="form-group">
-                <label>Наименование по КП</label>
-                <input type="text" value={editForm.name_by_cp} 
-                    onChange={e => setEditForm({...editForm, name_by_cp: e.target.value})} />
-            </div>
-            
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div className="form-group">
-                    <label>Количество</label>
-                    <input type="number" step="0.01" value={editForm.quantity} 
-                        onChange={e => setEditForm({...editForm, quantity: parseFloat(e.target.value) || 0})} />
+                <div className="modal active" onClick={() => setEditingPosition(null)}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <h2>Редактирование позиции #{editingPosition.id}</h2>
+                        
+                        <div className="form-group">
+                            <label>Наименование по ИЛ</label>
+                            <input type="text" value={editForm.name_by_il} 
+                                onChange={e => setEditForm({...editForm, name_by_il: e.target.value})} />
+                        </div>
+                        
+                        <div className="form-group">
+                            <label>Наименование по КП</label>
+                            <input type="text" value={editForm.name_by_cp} 
+                                onChange={e => setEditForm({...editForm, name_by_cp: e.target.value})} />
+                        </div>
+                        
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                            <div className="form-group">
+                                <label>Количество</label>
+                                <input type="number" step="0.01" value={editForm.quantity} 
+                                    onChange={e => setEditForm({...editForm, quantity: parseFloat(e.target.value) || 0})} />
+                            </div>
+                            <div className="form-group">
+                                <label>Ед. изм.</label>
+                                <input type="text" value={editForm.unit} 
+                                    onChange={e => setEditForm({...editForm, unit: e.target.value})} />
+                            </div>
+                        </div>
+                        
+                        <div className="form-group">
+                            <label>Целевая цена (₽)</label>
+                            <input type="number" step="0.01" value={editForm.target_price} 
+                                onChange={e => setEditForm({...editForm, target_price: parseFloat(e.target.value) || 0})} />
+                        </div>
+                        
+                        <div className="form-group">
+                            <label>Статус</label>
+                            <select 
+                                value={editForm.status} 
+                                onChange={e => setEditForm({...editForm, status: e.target.value})}
+                                style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #ddd' }}
+                            >
+                                <option value="in_work">В работе</option>
+                                <option value="completed">Завершен</option>
+                                <option value="cancelled">Отменен</option>
+                            </select>
+                        </div>
+                        
+                        <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
+                            <button className="btn-primary" onClick={savePosition} style={{ flex: 1 }}>
+                                Сохранить
+                            </button>
+                            <button className="btn-outline" onClick={() => setEditingPosition(null)} style={{ flex: 1 }}>
+                                Отмена
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label>Ед. изм.</label>
-                    <input type="text" value={editForm.unit} 
-                        onChange={e => setEditForm({...editForm, unit: e.target.value})} />
-                </div>
-            </div>
-            
-            <div className="form-group">
-                <label>Целевая цена (₽)</label>
-                <input type="number" step="0.01" value={editForm.target_price} 
-                    onChange={e => setEditForm({...editForm, target_price: parseFloat(e.target.value) || 0})} />
-            </div>
-            
-            {/* ВЫБОР СТАТУСА */}
-            <div className="form-group">
-                <label>Статус</label>
-                <select 
-                    value={editForm.status} 
-                    onChange={e => setEditForm({...editForm, status: e.target.value})}
-                    style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #ddd' }}
-                >
-                    <option value="in_work">В работе</option>
-                    <option value="completed">Завершен</option>
-                    <option value="cancelled">Отменен</option>
-                </select>
-            </div>
-            
-            <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
-                <button className="btn-primary" onClick={savePosition} style={{ flex: 1 }}>
-                    Сохранить
-                </button>
-                <button className="btn-outline" onClick={() => setEditingPosition(null)} style={{ flex: 1 }}>
-                    Отмена
-                </button>
-            </div>
-        </div>
-    </div>
-)}
+            )}
         </>
     );
 }

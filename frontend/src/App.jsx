@@ -8,7 +8,6 @@ import EngineeringLists from './pages/EngineeringLists';
 import EngineeringDetail from './pages/EngineeringDetail';
 import Lots from './pages/Lots';
 import Suppliers from './pages/Suppliers';
-import Chats from './pages/Chats';
 import Profile from './pages/Profile';
 import './styles/global.css';
 
@@ -97,7 +96,6 @@ function App() {
                     <Route path="engineering-detail" element={<EngineeringDetail user={user} />} />
                     <Route path="lots" element={<Lots user={user} />} />
                     <Route path="suppliers" element={<Suppliers user={user} />} />
-                    <Route path="chats" element={<Chats user={user} />} />
                     <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
                 </Route>
                 <Route path="*" element={<Navigate to="/" />} />

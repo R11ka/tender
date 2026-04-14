@@ -7,8 +7,6 @@
 
 Веб-приложение для автоматизации процесса тендерных закупок. Позволяет импортировать инженерные листы, управлять позициями, вести коммуникацию с поставщиками, фиксировать результаты торгов и формировать итоговые закупочные лоты.
 
-![Dashboard Screenshot](https://via.placeholder.com/800x400?text=Скриншот+Дашборда+TenderFlow) <!-- Ты можешь вставить сюда свой скрин -->
-
 ## 🚀 Ключевые возможности
 
 - **Импорт ИЛ:** Загрузка и парсинг Excel (.xlsx) и CSV файлов с автоматическим созданием позиций.
@@ -25,12 +23,12 @@
 | Уровень | Технологии |
 | :--- | :--- |
 | **Backend** | Python 3.11, Django 5.0, Django REST Framework, Simple JWT |
-| **Frontend** | React 18, React Router, Axios, CSS Modules |
+| **Frontend** | React 18, React Router, Axios, Vite |
 | **Database** | PostgreSQL 15 |
 | **Deployment** | Docker, Docker Compose, Gunicorn |
 | **Design** | Figma (Гайдлайн и дизайн-система) |
 
-## 📦 Локальный запуск (Docker)
+## 📦 Быстрый старт (Docker)
 
 Самый простой способ развернуть проект — использовать Docker Compose.
 
@@ -41,7 +39,24 @@
 
 ### Инструкция по запуску
 
-1.  **Клонируйте репозиторий:**
-    ```bash
-    git clone <your-repo-url>
-    cd <your-project-folder>
+1. **Клонируйте репозиторий:**
+   ```bash
+   git clone https://github.com/R11ka/tender.git
+   cd tender
+
+2. **Запустите сборку и развертывание:**
+   ```bash
+   docker-compose -p tenderflow up --build
+
+3. **Дождитесь завершения сборки**
+   Контейнеры автоматически применят миграции и запустят сервера.
+
+4. **Готово! Приложение доступно по адресам:**
+    Фронтенд: http://localhost
+    Бэкенд API: http://localhost:8000/api/
+    Админка Django: http://localhost:8000/admin/
+
+5. **Создание тестового суперпользователя (опционально):**
+   ```bash
+   docker-compose -p tenderflow exec backend python manage.py createsuperuser
+

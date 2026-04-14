@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: tenderflow_db
+      POSTGRES_USER: tenderflow_user
+      POSTGRES_PASSWORD: tenderflow_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tenderflow_user -d tenderflow_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - tender_network
+
+  backend:
+    build: ./backend
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/app
+      - media_volume:/app/media
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_NAME=tenderflow_db
+      - DATABASE_USER=tenderflow_user
+      - DATABASE_PASSWORD=tenderflow_password
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - SECRET_KEY=supersecretkeyfordev
+      - DEBUG=1
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - tender_network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:5173"   # <-- Открываем на 80 порту, чтобы не писать :5173
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+    depends_on:
+      - backend
+    networks:
+      - tender_network
+
+volumes:
+  postgres_data:
+  media_volume:
+
+networks:
+  tender_network:
+    driver: bridge
